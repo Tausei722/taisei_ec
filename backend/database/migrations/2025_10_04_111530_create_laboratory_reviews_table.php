@@ -13,24 +13,20 @@ return new class extends Migration
     {
         Schema::create('laboratory_reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('laboratory_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('title'); // レビューのタイトル
-            $table->text('content'); // レビュー内容
+            $table->text('research_content'); // 研究内容
+            $table->foreignId('laboratory_id')->constrained()->onDelete('cascade'); // 研究室(研究室DB foreign)
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // 投稿者(ユーザーDB foreign)
             $table->integer('overall_rating'); // 総合評価 (1-5)
-            $table->integer('research_rating')->nullable(); // 研究内容の評価 (1-5)
-            $table->integer('supervision_rating')->nullable(); // 指導の評価 (1-5)
-            $table->integer('environment_rating')->nullable(); // 研究環境の評価 (1-5)
-            $table->integer('career_rating')->nullable(); // 進路サポートの評価 (1-5)
-            $table->string('academic_year')->nullable(); // 在籍年度（例：2023年度）
-            $table->string('degree_type')->nullable(); // 学位種類（学士、修士、博士）
-            $table->text('research_topic')->nullable(); // 研究テーマ
-            $table->text('career_path')->nullable(); // 進路情報
-            $table->json('images')->nullable(); // 画像
-            $table->date('graduation_date')->nullable(); // 卒業/修了日
-            $table->boolean('is_verified')->default(false); // 認証済みかどうか
-            $table->boolean('is_anonymous')->default(false); // 匿名投稿かどうか
-            $table->integer('helpful_count')->default(0); // 参考になったカウント
+            $table->integer('professor_atmosphere'); // 先生の雰囲気(ブラックかどうか) (1-5)
+            $table->integer('senior_atmosphere'); // 先輩の雰囲気(ブラックかどうか) (1-5)
+            $table->integer('core_time'); // コアタイム(研究室への拘束時間) (1-5)
+            $table->integer('laboratory_connection'); // 研究室のコネ(企業へのつながり) (1-5)
+            $table->integer('evaluation_strictness'); // 評価の厳しさ (1-5)
+            $table->integer('job_hunting_situation'); // 就活事情 (1-5)
+            $table->integer('research_funding'); // 研究費用の充実度 (1-5)
+            $table->integer('conference_frequency'); // 学会への出撃回数 (1-5)
+            $table->integer('extracurricular_interaction'); // 研究外での交流 (1-5)
+            $table->integer('helpful_count')->default(0); // 好評価数
             $table->timestamps();
 
             // 複合インデックス（一人一つの研究室に対して一つのレビューのみ）
