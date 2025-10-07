@@ -16,7 +16,11 @@ class DatabaseSeeder extends Seeder
         // Create test user (avoid duplicates)
         User::firstOrCreate(
             ['email' => 'test@example.com'],
-            ['name' => 'Test User']
+            [
+                'name' => 'Test User',
+                'password' => bcrypt('password123'),
+                'status' => 'other',
+            ]
         );
 
         // Create additional test users if they don't exist
@@ -28,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ReviewSiteCategorySeeder::class,
             BusinessSeeder::class,
+            LaboratorySeeder::class,
         ]);
     }
 }
